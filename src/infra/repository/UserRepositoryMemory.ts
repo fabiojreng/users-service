@@ -1,9 +1,13 @@
-import ICreateUserRepository from "../aplication/repository/UserRepository";
-import User from "../domain/entities/User";
+import ICreateUserRepository from "../../aplication/repository/UserRepository";
+import User from "../../domain/entities/User";
 
-export default class CreateUserDB implements ICreateUserRepository {
+export default class UserRepositoryDBMemory implements ICreateUserRepository {
   users: User[] = [];
 
+  async findAll(): Promise<void | User[]> {
+    console.log(this.users);
+    return this.users;
+  }
   async save(user: User): Promise<void> {
     this.users.push(user);
   }

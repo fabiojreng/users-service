@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import GetUsersService from "../aplication/services/GetUsersService";
+import GetUsersService from "../aplication/services/GetUserService";
 
 export default class GetUserController {
   constructor(private getUserService: GetUsersService) {}

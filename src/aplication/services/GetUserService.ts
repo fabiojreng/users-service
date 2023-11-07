@@ -1,5 +1,5 @@
 import IUserRepository from "../repository/UserRepository";
-import IGetUsersUseCase, { Output } from "../useCases/GetUsersUseCase";
+import IGetUsersUseCase, { Output } from "../../domain/useCases/GetUserUseCase";
 
 export default class GetUsersService implements IGetUsersUseCase {
   constructor(private getUserRepository: IUserRepository) {}
@@ -7,7 +7,7 @@ export default class GetUsersService implements IGetUsersUseCase {
     try {
       const user = await this.getUserRepository.findById(id);
 
-      if (!user) throw new Error();
+      if (!user) throw new Error("messege: User not found");
       return {
         id: user.id,
         name: user.name.getName(),
@@ -18,7 +18,7 @@ export default class GetUsersService implements IGetUsersUseCase {
         createdAt: user.createdAt,
       };
     } catch (error) {
-      throw new Error("User not exist");
+      throw new Error(`messege: ${error}`);
     }
   }
 }

@@ -2,7 +2,7 @@ import User from "../../domain/entities/User";
 import IUserRepository from "../repository/UserRepository";
 import ICreateUserUseCase, {
   ICreateUserParams,
-} from "../useCases/CreateUserUseCase";
+} from "../../domain/useCases/CreateUserUseCase";
 
 export default class CreateUserService implements ICreateUserUseCase {
   constructor(private createUserRepository: IUserRepository) {}
@@ -12,6 +12,7 @@ export default class CreateUserService implements ICreateUserUseCase {
         params.email
       );
       if (verifyEmail) throw new Error("Email already exists");
+      //const password =
       const user = User.create(
         params.name,
         params.email,
@@ -20,11 +21,12 @@ export default class CreateUserService implements ICreateUserUseCase {
         params.course,
         params.typeUser
       );
-      await this.createUserRepository.save(user);
       console.log(user);
+      await this.createUserRepository.save(user);
       return user;
     } catch (error) {
-      throw new Error("User not created");
+      if (error instanceof Error) throw new Error(error.message);
+      throw new Error("Unexpected error");
     }
   }
 }
