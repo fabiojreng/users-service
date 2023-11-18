@@ -1,23 +1,24 @@
-import { Request, Response } from "express";
-import ICreateUserUseCase from "../domain/useCases/CreateUserUseCase";
+import ICreateUserUseCase, {
+  ICreateUserParams,
+} from "../domain/useCases/CreateUserUseCase";
+import {
+  HttpRequest,
+  HttpResponse,
+  IController,
+} from "./HttpAdapterController";
 
-export default class CreateUserController {
+export default class CreateUserController implements IController {
   constructor(private createUserService: ICreateUserUseCase) {}
-  async start(req: Request, res: Response): Promise<Response> {
+  async start(
+    httpRequest: HttpRequest<ICreateUserParams>
+  ): Promise<HttpResponse<unknown>> {
     try {
-      await this.createUserService.execute({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        registerCode: req.body.registerCode,
-        course: req.body.course,
-        typeUser: req.body.typeUser,
-      });
-      return res.status(201).json({ message: "User created" });
+      await this.createUserService.execute(httpRequest.body!);
+      return { statusCode: 201, body: "User created" };
     } catch (error) {
       if (error instanceof Error)
-        return res.status(400).json({ messege: error.message });
-      return res.status(400).json({ messege: "Unexpected error" });
+        return { statusCode: 400, body: error.message };
+      return { statusCode: 400, body: "Unexpected error" };
     }
   }
 }

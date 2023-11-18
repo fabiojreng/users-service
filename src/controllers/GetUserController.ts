@@ -1,10 +1,22 @@
-import { Request, Response } from "express";
 import GetUsersService from "../aplication/services/GetUserService";
+import {
+  HttpRequest,
+  HttpResponse,
+  IController,
+} from "./HttpAdapterController";
 
-export default class GetUserController {
+export default class GetUserController implements IController {
   constructor(private getUserService: GetUsersService) {}
-  async start(req: Request, res: Response): Promise<Response> {
-    const user = await this.getUserService.execute(req.params.id);
-    return res.json(user);
+  async start(
+    httpRequest: HttpRequest<unknown>
+  ): Promise<HttpResponse<unknown>> {
+    try {
+      const user = await this.getUserService.execute(httpRequest.params.id);
+      return { statusCode: 200, body: user };
+    } catch (error) {
+      if (error instanceof Error)
+        return { statusCode: 400, body: error.message };
+      return { statusCode: 500, body: error };
+    }
   }
 }
