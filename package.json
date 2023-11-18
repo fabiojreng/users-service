@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --watch 'src/' --exec 'ts-node src/infra/dataBase/Teste.ts' -e ts"
+    "start": "nodemon --watch 'src/' --exec 'ts-node src/index.ts' -e ts"
   },
   "devDependencies": {
     "@types/express": "^4.17.20",

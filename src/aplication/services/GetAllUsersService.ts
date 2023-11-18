@@ -8,7 +8,7 @@ export default class GetAllUsersService implements IGetAllUsersUseCase {
     try {
       const users = await this.getAllUsersRepository.findAll();
 
-      if (!users) throw new Error("Users not found");
+      if (!users) throw new Error();
       return users;
     } catch (error) {
       throw new Error(`messege: ${error}`);

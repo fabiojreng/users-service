@@ -7,7 +7,7 @@ export default class GetUsersService implements IGetUsersUseCase {
     try {
       const user = await this.getUserRepository.findById(id);
 
-      if (!user) throw new Error("messege: User not found");
+      if (!user) throw new Error("User not found");
       return {
         id: user.id,
         name: user.name.getName(),
@@ -18,7 +18,7 @@ export default class GetUsersService implements IGetUsersUseCase {
         createdAt: user.createdAt,
       };
     } catch (error) {
-      throw new Error(`messege: ${error}`);
+      throw new Error(`${error}`);
     }
   }
 }
