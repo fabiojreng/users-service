@@ -1,16 +1,16 @@
 export default class UserType {
-  private typeUser: string;
+  private value: string;
 
   constructor(type: string) {
     const validTypes = ["Aluno", "Servidor", "Bibliotecário"];
     if (validTypes.includes(type)) {
-      this.typeUser = type;
+      this.value = type;
     } else {
       throw new Error("Invalid type user");
     }
   }
 
-  getType() {
-    return this.typeUser;
+  getValue() {
+    return this.value;
   }
 }

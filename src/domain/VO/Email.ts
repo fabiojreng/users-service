@@ -1,12 +1,12 @@
 export default class Email {
-  private email: string;
+  private value: string;
 
   constructor(email: string) {
     if (!email.match(/^(.+)@(.+)$/)) throw new Error("Invalid email");
-    this.email = email;
+    this.value = email;
   }
 
-  getEmail() {
-    return this.email;
+  getValue() {
+    return this.value;
   }
 }

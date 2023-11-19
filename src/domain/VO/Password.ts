@@ -5,4 +5,10 @@ export default class Password {
     if (password.length < 6) throw new Error("Invalid length password");
     this.value = password;
   }
+
+  //setValue(pass: string, passDB: string): void {}
+
+  getValue() {
+    return this.value;
+  }
 }
