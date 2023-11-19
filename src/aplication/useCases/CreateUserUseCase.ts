@@ -1,10 +1,16 @@
 import User from "../../domain/entities/User";
 import IUserRepository from "../repository/UserRepository";
-import ICreateUserUseCase, {
-  ICreateUserParams,
-} from "../../domain/useCases/CreateUserUseCase";
 
-export default class CreateUserService implements ICreateUserUseCase {
+export interface ICreateUserParams {
+  name: string;
+  email: string;
+  password: string;
+  registerCode: string;
+  course: string;
+  typeUser: string;
+}
+
+export default class CreateUserUseCase {
   constructor(private createUserRepository: IUserRepository) {}
   async execute(params: ICreateUserParams): Promise<User> {
     try {

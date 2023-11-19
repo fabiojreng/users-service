@@ -1,8 +1,7 @@
 import User from "../../domain/entities/User";
-import IGetAllUsersUseCase from "../../domain/useCases/GetAllUserUseCase";
 import IUserRepository from "../repository/UserRepository";
 
-export default class GetAllUsersService implements IGetAllUsersUseCase {
+export default class GetAllUsersUseCase {
   constructor(private getAllUsersRepository: IUserRepository) {}
   async execute(): Promise<User[]> {
     try {

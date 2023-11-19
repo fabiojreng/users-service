@@ -1,7 +1,16 @@
 import IUserRepository from "../repository/UserRepository";
-import IGetUsersUseCase, { Output } from "../../domain/useCases/GetUserUseCase";
 
-export default class GetUsersService implements IGetUsersUseCase {
+export interface Output {
+  id: string;
+  name: string;
+  email: string;
+  registerCode: string;
+  course: string;
+  typeUser: string;
+  createdAt: Date;
+}
+
+export default class GetUserUseCase {
   constructor(private getUserRepository: IUserRepository) {}
   async execute(id: string): Promise<Output> {
     try {
@@ -10,11 +19,11 @@ export default class GetUsersService implements IGetUsersUseCase {
       if (!user) throw new Error("User not found");
       return {
         id: user.id,
-        name: user.name.getName(),
-        email: user.email.getEmail(),
+        name: user.name.getValue(),
+        email: user.email.getValue(),
         registerCode: user.registerCode,
         course: user.course,
-        typeUser: user.typeUser.getType(),
+        typeUser: user.typeUser.getValue(),
         createdAt: user.createdAt,
       };
     } catch (error) {
