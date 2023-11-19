@@ -1,4 +1,4 @@
-import GetUsersService from "../aplication/services/GetUserService";
+import GetUserUseCase from "../aplication/useCases/GetUserUseCase";
 import {
   HttpRequest,
   HttpResponse,
@@ -6,7 +6,7 @@ import {
 } from "./HttpAdapterController";
 
 export default class GetUserController implements IController {
-  constructor(private getUserService: GetUsersService) {}
+  constructor(private getUserService: GetUserUseCase) {}
   async start(
     httpRequest: HttpRequest<unknown>
   ): Promise<HttpResponse<unknown>> {

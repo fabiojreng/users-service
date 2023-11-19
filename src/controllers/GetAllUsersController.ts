@@ -1,8 +1,8 @@
-import GetAllUsersService from "../aplication/services/GetAllUsersService";
+import GetAllUsersUseCase from "../aplication/useCases/GetAllUserUseCase";
 import { HttpResponse, IController } from "./HttpAdapterController";
 
 export default class GetAllUsersController implements IController {
-  constructor(private getAllUsersService: GetAllUsersService) {}
+  constructor(private getAllUsersService: GetAllUsersUseCase) {}
   async start(): Promise<HttpResponse<unknown>> {
     try {
       const users = await this.getAllUsersService.execute();

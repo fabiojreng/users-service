@@ -1,6 +1,6 @@
 import ICreateUserUseCase, {
   ICreateUserParams,
-} from "../domain/useCases/CreateUserUseCase";
+} from "../aplication/useCases/CreateUserUseCase";
 import {
   HttpRequest,
   HttpResponse,
