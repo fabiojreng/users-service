@@ -9,7 +9,7 @@ export default class UserRepositoryDBMemory implements ICreateUserRepository {
   }
 
   async findByEmail(email: string): Promise<void | User> {
-    const user = this.users.find((user) => user.email.getEmail() === email);
+    const user = this.users.find((user) => user.email.getValue() === email);
     return user;
   }
 
