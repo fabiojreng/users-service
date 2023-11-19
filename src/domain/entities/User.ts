@@ -37,4 +37,26 @@ export default class User {
       createdAt
     );
   }
+
+  static restore(
+    id: string,
+    name: string,
+    email: string,
+    password: string,
+    registerCode: string,
+    course: string,
+    typeUser: string,
+    createdAt: string
+  ) {
+    return new User(
+      id,
+      new Name(name),
+      new Email(email),
+      new Password(password),
+      registerCode,
+      course,
+      new UserType(typeUser),
+      new Date(createdAt)
+    );
+  }
 }
