@@ -10,7 +10,8 @@ export default class GetAllUsersUseCase {
       if (!users) throw new Error();
       return users;
     } catch (error) {
-      throw new Error(`messege: ${error}`);
+      if (error instanceof Error) throw new Error(error.message);
+      throw new Error("Unexpected error");
     }
   }
 }

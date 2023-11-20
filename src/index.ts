@@ -1,15 +1,18 @@
 import express from "express";
 import CreateUserUseCase from "./aplication/useCases/CreateUserUseCase";
 import GetAllUsersUseCase from "./aplication/useCases/GetAllUserUseCase";
+import GetUserUseCase from "./aplication/useCases/GetUserUseCase";
+import AdapterMongoDB from "./infra/dataBase/AdapterMongoDB";
+import UserRepositoryMongoDB from "./infra/repository/UserRepositoryMogoDB";
 import CreateUserController from "./controllers/CreateUserController";
 import GetAllUsersController from "./controllers/GetAllUsersController";
 import GetUserController from "./controllers/GetUserController";
-import AdapterMongoDB from "./infra/dataBase/AdapterMongoDB";
-import UserRepositoryMongoDB from "./infra/repository/UserRepositoryMogoDB";
-import GetUserUseCase from "./aplication/useCases/GetUserUseCase";
+
 const app = express();
 
 app.use(express.json());
+
+//const dbFake = new UserRepositoryDBMemory();
 
 app.get("/users", async (req, res) => {
   const connection = new AdapterMongoDB();

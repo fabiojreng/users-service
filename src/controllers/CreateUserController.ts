@@ -1,4 +1,4 @@
-import ICreateUserUseCase, {
+import CreateUserUseCase, {
   ICreateUserParams,
 } from "../aplication/useCases/CreateUserUseCase";
 import {
@@ -8,12 +8,12 @@ import {
 } from "./HttpAdapterController";
 
 export default class CreateUserController implements IController {
-  constructor(private createUserService: ICreateUserUseCase) {}
+  constructor(private createUser: CreateUserUseCase) {}
   async start(
     httpRequest: HttpRequest<ICreateUserParams>
   ): Promise<HttpResponse<unknown>> {
     try {
-      await this.createUserService.execute(httpRequest.body!);
+      await this.createUser.execute(httpRequest.body!);
       return { statusCode: 201, body: "User created" };
     } catch (error) {
       if (error instanceof Error)

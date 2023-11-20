@@ -16,7 +16,7 @@ export default class GetUserUseCase {
     try {
       const user = await this.getUserRepository.findById(id);
 
-      if (!user) throw new Error("User not found");
+      if (!user) throw new Error(`User not found for id ${id}`);
       return {
         id: user.id,
         name: user.name.getValue(),
@@ -27,7 +27,8 @@ export default class GetUserUseCase {
         createdAt: user.createdAt,
       };
     } catch (error) {
-      throw new Error(`${error}`);
+      if (error instanceof Error) throw new Error(error.message);
+      throw new Error("Unexpected error");
     }
   }
 }

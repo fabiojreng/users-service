@@ -1,17 +1,15 @@
 import { MongoClient, Db } from "mongodb";
 import IDatabaseConnection from "./Connection";
-// import User from "../../domain/entities/User";
 
 export default class AdapterMongoDB implements IDatabaseConnection {
   private client: MongoClient;
   private db: Db;
-  private url: string =
+  private url =
     process.env.MONGODB_URL || "mongodb+srv://cluster0.r6jwwdl.mongodb.net";
-  private username: string = process.env.MONGODB_USERNAME || "root";
-  private password: string = process.env.MONGODB_PASSWORD || "PblsfQCyHhJdIvbr";
+  private username = process.env.MONGODB_USERNAME || "root";
+  private password = process.env.MONGODB_PASSWORD || "PblsfQCyHhJdIvbr";
 
   constructor() {
-    console.log(this.username, this.password);
     this.client = new MongoClient(this.url, {
       auth: { username: this.username, password: this.password },
     });
@@ -23,11 +21,13 @@ export default class AdapterMongoDB implements IDatabaseConnection {
     console.log("conectado");
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async query(statement?: string, params?: any): Promise<Db> {
     return this.db;
   }
 
   async close(): Promise<void> {
     await this.client.close();
+    console.log("fechando conexão");
   }
 }
