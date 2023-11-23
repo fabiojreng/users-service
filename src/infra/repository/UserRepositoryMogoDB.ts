@@ -8,7 +8,7 @@ export default class UserRepositoryMongoDB implements IUserRepository {
 
   async save(user: User): Promise<void> {
     try {
-      console.log("aqui");
+      await this.mongo.connect();
       const query = await this.mongo.query();
       await query.collection("users").insertOne({
         name: user.name.getValue(),
@@ -31,7 +31,6 @@ export default class UserRepositoryMongoDB implements IUserRepository {
     try {
       await this.mongo.connect();
       const query = await this.mongo.query();
-      console.log(email);
       const userDB = await query.collection("users").findOne({ email: email });
       if (userDB) {
         const user = User.restore(
@@ -44,11 +43,13 @@ export default class UserRepositoryMongoDB implements IUserRepository {
           userDB.typeUser,
           userDB.createdAt
         );
-        console.log(user);
         return user;
       }
     } catch (error) {
+      if (error instanceof Error) throw new Error(error.message);
       throw new Error(`User not found for email: ${email}`);
+    } finally {
+      await this.mongo.close();
     }
   }
 
@@ -56,8 +57,6 @@ export default class UserRepositoryMongoDB implements IUserRepository {
     try {
       await this.mongo.connect();
       const query = await this.mongo.query();
-      console.log(id);
-
       const userDB = await query
         .collection("users")
         .findOne({ _id: new ObjectId(id) });
@@ -72,7 +71,6 @@ export default class UserRepositoryMongoDB implements IUserRepository {
           userDB.typeUser,
           userDB.createdAt
         );
-        console.log(user);
         return user;
       }
       throw new Error(`User not found for id: ${id} DB`);
@@ -96,6 +94,20 @@ export default class UserRepositoryMongoDB implements IUserRepository {
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);
       throw new Error("Unexpected error DB");
+    } finally {
+      await this.mongo.close();
+    }
+  }
+
+  async delete(id: string): Promise<void> {
+    try {
+      await this.mongo.connect();
+      const query = await this.mongo.query();
+
+      await query.collection("users").deleteOne({ _id: new ObjectId(id) });
+    } catch (error) {
+      if (error instanceof Error) throw new Error(error.message);
+      throw new Error(`User not found for id: ${id}`);
     } finally {
       await this.mongo.close();
     }

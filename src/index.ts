@@ -7,12 +7,12 @@ import UserRepositoryMongoDB from "./infra/repository/UserRepositoryMogoDB";
 import CreateUserController from "./controllers/CreateUserController";
 import GetAllUsersController from "./controllers/GetAllUsersController";
 import GetUserController from "./controllers/GetUserController";
+import DeleteUserUseCase from "./aplication/useCases/DeleteUserUseCase";
+import DeleteUserController from "./controllers/DeleteUserController";
 
 const app = express();
 
 app.use(express.json());
-
-//const dbFake = new UserRepositoryDBMemory();
 
 app.get("/users", async (req, res) => {
   const connection = new AdapterMongoDB();
@@ -38,6 +38,15 @@ app.post("/user", async (req, res) => {
   const createUserUseCase = new CreateUserUseCase(mongoDB);
   const createUserControler = new CreateUserController(createUserUseCase);
   const { statusCode, body } = await createUserControler.start(req);
+  res.status(statusCode).send(body);
+});
+
+app.delete("/user/:id", async (req, res) => {
+  const connection = new AdapterMongoDB();
+  const mongoDB = new UserRepositoryMongoDB(connection);
+  const deleteUserUseCase = new DeleteUserUseCase(mongoDB);
+  const deleteUserController = new DeleteUserController(deleteUserUseCase);
+  const { statusCode, body } = await deleteUserController.start(req);
   res.status(statusCode).send(body);
 });
 
