@@ -5,7 +5,7 @@ export default class DeleteUserUseCase {
   async execute(id: string) {
     try {
       const user = await this.deleteUserRepository.findById(id);
-      if (!user) throw new Error("Id not found");
+      if (!user) throw new Error(`User not found for id ${id}`);
       await this.deleteUserRepository.delete(id);
       return user;
     } catch (error) {

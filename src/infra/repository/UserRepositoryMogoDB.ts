@@ -47,7 +47,7 @@ export default class UserRepositoryMongoDB implements IUserRepository {
       }
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);
-      throw new Error(`User not found for email: ${email}`);
+      throw new Error("Unexpected error DB");
     } finally {
       await this.mongo.close();
     }
@@ -73,7 +73,6 @@ export default class UserRepositoryMongoDB implements IUserRepository {
         );
         return user;
       }
-      throw new Error(`User not found for id: ${id} DB`);
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);
       throw new Error("Unexpected error DB");
@@ -107,7 +106,7 @@ export default class UserRepositoryMongoDB implements IUserRepository {
       await query.collection("users").deleteOne({ _id: new ObjectId(id) });
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);
-      throw new Error(`User not found for id: ${id}`);
+      throw new Error("Unexpected error DB");
     } finally {
       await this.mongo.close();
     }
