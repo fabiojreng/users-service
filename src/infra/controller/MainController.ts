@@ -2,6 +2,7 @@ import CreateUserUseCase from "../../aplication/useCases/CreateUserUseCase";
 import DeleteUserUseCase from "../../aplication/useCases/DeleteUserUseCase";
 import GetAllUsersUseCase from "../../aplication/useCases/GetAllUserUseCase";
 import GetUserUseCase from "../../aplication/useCases/GetUserUseCase";
+import UpdateUserUseCase from "../../aplication/useCases/UpdateUserUseCase";
 import HttpServer from "../http/HttpServer";
 
 export default class MainController {
@@ -10,12 +11,17 @@ export default class MainController {
     private getUser: GetUserUseCase,
     private getAllUsers: GetAllUsersUseCase,
     private deleteUser: DeleteUserUseCase,
+    private updateUser: UpdateUserUseCase,
     private httpServer: HttpServer
   ) {
-    httpServer.register("post", "/user", async function (params: any) {
-      await createUser.execute(params);
-      return { statusCode: 201, body: "User created" };
-    });
+    httpServer.register(
+      "post",
+      "/user",
+      async function (params: any, body: any) {
+        await createUser.execute(body);
+        return { statusCode: 201, body: "User created" };
+      }
+    );
     httpServer.register("get", "/user/:id", async function (params: any) {
       const user = await getUser.execute(params.id);
       return { statusCode: 200, body: user };
@@ -28,5 +34,13 @@ export default class MainController {
       await deleteUser.execute(params.id);
       return { statusCode: 200, body: "User deleted successfully" };
     });
+    httpServer.register(
+      "patch",
+      "/user/:id",
+      async function (params: any, body: any) {
+        await updateUser.start(params.id, body);
+        return { statusCode: 200, body: "User updated successfully" };
+      }
+    );
   }
 }
