@@ -1,31 +1,10 @@
 import { ObjectId } from "mongodb";
-import IUserRepository, {
-  paramsUpdate,
-} from "../../aplication/repository/UserRepository";
+import IUserRepository from "../../aplication/repository/UserRepository";
 import User from "../../domain/entities/User";
 import AdapterMongoDB from "../dataBase/AdapterMongoDB";
 
 export default class UserRepositoryMongoDB implements IUserRepository {
   constructor(private mongo: AdapterMongoDB) {}
-  async update(id: string, params: paramsUpdate): Promise<void> {
-    try {
-      await this.mongo.connect();
-      const query = await this.mongo.query();
-      await query.collection("users").updateOne(
-        { _id: new ObjectId(id) },
-        {
-          $set: {
-            ...params,
-          },
-        }
-      );
-    } catch (error) {
-      if (error instanceof Error) throw new Error(error.message);
-      throw new Error("Unexpected error DB");
-    } finally {
-      await this.mongo.close();
-    }
-  }
 
   async save(user: User): Promise<void> {
     try {
@@ -111,20 +90,6 @@ export default class UserRepositoryMongoDB implements IUserRepository {
         ...rest,
         id: _id.toHexString(),
       }));
-    } catch (error) {
-      if (error instanceof Error) throw new Error(error.message);
-      throw new Error("Unexpected error DB");
-    } finally {
-      await this.mongo.close();
-    }
-  }
-
-  async delete(id: string): Promise<void> {
-    try {
-      await this.mongo.connect();
-      const query = await this.mongo.query();
-
-      await query.collection("users").deleteOne({ _id: new ObjectId(id) });
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);
       throw new Error("Unexpected error DB");
