@@ -6,8 +6,8 @@ export default class AdapterMongoDB implements IDatabaseConnection {
   private db: Db;
   private url =
     process.env.MONGODB_URL || "mongodb+srv://cluster0.r6jwwdl.mongodb.net";
-  private username = process.env.MONGODB_USERNAME || "root";
-  private password = process.env.MONGODB_PASSWORD || "PblsfQCyHhJdIvbr";
+  private username = process.env.MONGODB_USERNAME;   
+  private password = process.env.MONGODB_PASSWORD;
 
   constructor() {
     this.client = new MongoClient(this.url, {
