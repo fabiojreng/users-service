@@ -1,12 +1,14 @@
 import { MongoClient, Db } from "mongodb";
 import IDatabaseConnection from "./Connection";
+import dotenv from "dotenv";
+dotenv.config();
 
 export default class AdapterMongoDB implements IDatabaseConnection {
   private client: MongoClient;
   private db: Db;
   private url =
     process.env.MONGODB_URL || "mongodb+srv://cluster0.r6jwwdl.mongodb.net";
-  private username = process.env.MONGODB_USERNAME;   
+  private username = process.env.MONGODB_USER;  
   private password = process.env.MONGODB_PASSWORD;
 
   constructor() {
