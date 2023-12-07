@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import Email from "../VO/Email";
 import Name from "../VO/Name";
-import UserType from "../VO/UserType";
+import TypeUser from "../VO/UserType";
 import Password from "../VO/Password";
 
 export default class User {
@@ -12,7 +12,7 @@ export default class User {
     readonly password: Password,
     readonly registerCode: string,
     readonly course: string,
-    readonly typeUser: UserType,
+    readonly typeUser: TypeUser,
     readonly createdAt: Date
   ) {}
 

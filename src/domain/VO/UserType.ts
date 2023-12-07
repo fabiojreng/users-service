@@ -1,4 +1,4 @@
-export default class UserType {
+export default class TypeUser {
   private value: string;
 
   constructor(type: string) {
