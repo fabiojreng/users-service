@@ -33,7 +33,7 @@ export default class User {
       new Password(password),
       registerCode,
       course,
-      new UserType(typeUser),
+      new TypeUser(typeUser),
       createdAt
     );
   }
@@ -55,7 +55,7 @@ export default class User {
       new Password(password),
       registerCode,
       course,
-      new UserType(typeUser),
+      new TypeUser(typeUser),
       new Date(createdAt)
     );
   }
