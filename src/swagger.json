@@ -1,1 +1,96 @@
-{}
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Users Service",
+    "description": "Serviço de criação de usuários, onde é possível a busca de um usuário por ID e de todos os usuários cadastrados",
+    "contact": {
+      "email": "fabiojunior@acad.ifma.edu.br"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333",
+      "description": "Servidor teste"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "summary": "Criação de usuário",
+        "description": "Essa rota serve para criar um usário",
+        "tags": ["Usuário"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "User": {
+                  "value": {
+                    "name": "Fábio da Silva",
+                    "email": "fabioeloijr@gmail",
+                    "password": "12345678",
+                    "registerCode": "20221ENG",
+                    "course": "Engenharia",
+                    "typeUser": "Aluno"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email already exists"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "registerCode": {
+            "type": "string"
+          },
+          "course": {
+            "type": "string"
+          },
+          "typeUser": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
