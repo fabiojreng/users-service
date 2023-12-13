@@ -29,12 +29,14 @@
               "examples": {
                 "User": {
                   "value": {
+                    "id": "6579d7a0703e4d2dc478f079",
                     "name": "Fábio da Silva",
                     "email": "fabioeloijr@gmail",
                     "password": "12345678",
                     "registerCode": "20221ENG",
                     "course": "Engenharia",
-                    "typeUser": "Aluno"
+                    "typeUser": "Aluno",
+                    "createdAt": "2023-12-13T16:11:12.037Z"
                   }
                 }
               }
@@ -55,6 +57,37 @@
           },
           "400": {
             "description": "Email already exists"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "summary": "Buscar usuário pelo id",
+        "description": "Essa rota serve para pegar um usário pelo seu id",
+        "tags": ["Usuário"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id para busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "id não encontrado"
           }
         }
       }
