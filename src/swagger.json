@@ -8,12 +8,14 @@
       "email": "fabiojunior@acad.ifma.edu.br"
     }
   },
+
   "servers": [
     {
       "url": "http://localhost:3333",
       "description": "Servidor teste"
     }
   ],
+
   "paths": {
     "/user": {
       "post": {
@@ -24,19 +26,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/componentsRequest/schemas/User"
               },
               "examples": {
                 "User": {
                   "value": {
-                    "id": "6579d7a0703e4d2dc478f079",
-                    "name": "Fábio da Silva",
-                    "email": "fabioeloijr@gmail",
+                    "name": "teste name",
+                    "email": "teste@gmail",
                     "password": "12345678",
-                    "registerCode": "20221ENG",
-                    "course": "Engenharia",
-                    "typeUser": "Aluno",
-                    "createdAt": "2023-12-13T16:11:12.037Z"
+                    "registerCode": "teste code",
+                    "course": "teste course",
+                    "typeUser": "Aluno"
                   }
                 }
               }
@@ -50,7 +50,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/componentsResponse/schemas/User"
                 }
               }
             }
@@ -81,7 +81,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/componentsResponse/schemas/User"
                 }
               }
             }
@@ -91,9 +91,35 @@
           }
         }
       }
+    },
+    "/users": {
+      "get": {
+        "summary": "Buscar todos os usuários",
+        "description": "Essa rota serve para pegar todos os usário",
+        "tags": ["Usuário"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/componentsResponse/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Usuários não encontrados"
+          }
+        }
+      }
     }
   },
-  "components": {
+
+  "componentsResponse": {
     "schemas": {
       "User": {
         "type": "object",
@@ -120,6 +146,34 @@
             "type": "string"
           },
           "createdAt": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+
+  "componentsRequest": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "registerCode": {
+            "type": "string"
+          },
+          "course": {
+            "type": "string"
+          },
+          "typeUser": {
             "type": "string"
           }
         }
