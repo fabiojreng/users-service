@@ -5,6 +5,8 @@ import GetAllUsersUseCase from "./aplication/useCases/GetAllUserUseCase";
 import GetUserUseCase from "./aplication/useCases/GetUserUseCase";
 import AdapterMongoDB from "./infra/dataBase/AdapterMongoDB";
 import UserRepositoryMongoDB from "./infra/repository/UserRepositoryMogoDB";
+import LoginUserUseCase from "./aplication/useCases/LoginUserUseCase";
+import JWTGeneretor from "./domain/entities/JWTGeneretor";
 
 const server = new ExpressAdapter();
 const connection = new AdapterMongoDB();
@@ -12,10 +14,7 @@ const mongoDB = new UserRepositoryMongoDB(connection);
 const createUser = new CreateUserUseCase(mongoDB);
 const getUser = new GetUserUseCase(mongoDB);
 const getAllUsers = new GetAllUsersUseCase(mongoDB);
-new MainController(
-  createUser,
-  getUser,
-  getAllUsers,
-  server
-);
+const jwtGeneretor = new JWTGeneretor();
+const login = new LoginUserUseCase(mongoDB, jwtGeneretor);
+new MainController(createUser, getUser, getAllUsers, login, server);
 server.listen(3333);
