@@ -20,10 +20,10 @@ export default class ExpressAdapter implements HttpServer {
     return this.app[method](url, async function (req: Request, res: Response) {
       try {
         const { statusCode, body } = await callback(req.params, req.body);
-        res.status(statusCode).send(body);
+        res.status(statusCode).json(body);
       } catch (error) {
-        if (error instanceof Error) res.status(400).send(error.message);
-        res.status(400).send("Unexpected error");
+        if (error instanceof Error) res.status(400).json(error.message);
+        res.status(400).json("Unexpected error");
       }
     });
   }
