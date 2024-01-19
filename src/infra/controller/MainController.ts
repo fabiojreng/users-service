@@ -1,6 +1,7 @@
 import CreateUserUseCase from "../../aplication/useCases/CreateUserUseCase";
 import GetAllUsersUseCase from "../../aplication/useCases/GetAllUserUseCase";
 import GetUserUseCase from "../../aplication/useCases/GetUserUseCase";
+import LoginUserUseCase from "../../aplication/useCases/LoginUserUseCase";
 import HttpServer from "../http/HttpServer";
 
 export default class MainController {
@@ -8,6 +9,7 @@ export default class MainController {
     private createUser: CreateUserUseCase,
     private getUser: GetUserUseCase,
     private getAllUsers: GetAllUsersUseCase,
+    private loginUser: LoginUserUseCase,
     private httpServer: HttpServer
   ) {
     httpServer.register(
@@ -15,7 +17,7 @@ export default class MainController {
       "/user",
       async function (params: any, body: any) {
         await createUser.execute(body);
-        return { statusCode: 201, body: "User created" };
+        return { statusCode: 201, body: { msg: "User created" } };
       }
     );
     httpServer.register("get", "/user/:id", async function (params: any) {
@@ -26,5 +28,19 @@ export default class MainController {
       const users = await getAllUsers.execute();
       return { statusCode: 200, body: users };
     });
+    httpServer.register(
+      "post",
+      "/login",
+      async function (params: any, body: any) {
+        const token = await loginUser.execute(body);
+        return {
+          statusCode: 200,
+          body: {
+            msg: "User authenticated",
+            token: token,
+          },
+        };
+      }
+    );
   }
 }
