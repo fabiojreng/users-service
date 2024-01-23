@@ -12,35 +12,39 @@ export default class MainController {
     private loginUser: LoginUserUseCase,
     private httpServer: HttpServer
   ) {
-    httpServer.register(
-      "post",
-      "/user",
-      async function (params: any, body: any) {
+    httpServer.register("post", "/user", async function (body: any) {
+      try {
         await createUser.execute(body);
         return { statusCode: 201, body: { msg: "User created" } };
+      } catch (error) {
+        if (error instanceof Error) throw new Error(error.message);
       }
-    );
+    });
     httpServer.register("get", "/user/:id", async function (params: any) {
-      const user = await getUser.execute(params.id);
-      return { statusCode: 200, body: user };
+      try {
+        const user = await getUser.execute(params.id);
+        return { statusCode: 200, body: user };
+      } catch (error) {
+        if (error instanceof Error) throw new Error(error.message);
+      }
     });
     httpServer.register("get", "/users", async function () {
-      const users = await getAllUsers.execute();
-      return { statusCode: 200, body: users };
-    });
-    httpServer.register(
-      "post",
-      "/login",
-      async function (params: any, body: any) {
-        const token = await loginUser.execute(body);
-        return {
-          statusCode: 200,
-          body: {
-            msg: "User authenticated",
-            token: token,
-          },
-        };
+      try {
+        const users = await getAllUsers.execute();
+        return { statusCode: 200, body: users };
+      } catch (error) {
+        if (error instanceof Error) throw new Error(error.message);
       }
-    );
+    });
+    httpServer.register("post", "/login", async function (body: any) {
+      const token = await loginUser.execute(body);
+      return {
+        statusCode: 200,
+        body: {
+          msg: "User authenticated",
+          token: token,
+        },
+      };
+    });
   }
 }
