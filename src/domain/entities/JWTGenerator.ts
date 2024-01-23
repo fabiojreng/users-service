@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "./User";
 
-export default class JWTGeneretor {
+export default class JWTGenerator {
   generateToken(payload: User): any {
     try {
       const token = jwt.sign(
@@ -20,7 +20,7 @@ export default class JWTGeneretor {
     try {
       const decoded = jwt.verify(token, process.env.SECRET_KEY!);
       if (!decoded) throw new Error("Token is not valid!");
-      // return decoded as JwtPayload;
+      return !!decoded;
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);
     }
