@@ -1,14 +1,11 @@
-import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import IUserRepository from "../repository/UserRepository";
-import JWTGeneretor from "../../domain/entities/JWTGeneretor";
-
-dotenv.config();
+import JWTGenerator from "../../domain/entities/JWTGenerator";
 
 export default class LoginUserUseCase {
   constructor(
     private userRepository: IUserRepository,
-    private jwtGeneretor: JWTGeneretor
+    private jwtGeneretor: JWTGenerator
   ) {}
   async execute(params: Input): Promise<string> {
     try {
@@ -21,7 +18,6 @@ export default class LoginUserUseCase {
       );
       if (!hash) throw new Error("User or pass is invalid");
       const token = this.jwtGeneretor.generateToken(user);
-      console.log(token);
       return token;
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);

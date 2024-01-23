@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import ExpressAdapter from "./infra/http/ExpressAdapter";
 import MainController from "./infra/controller/MainController";
 import CreateUserUseCase from "./aplication/useCases/CreateUserUseCase";
@@ -6,7 +7,8 @@ import GetUserUseCase from "./aplication/useCases/GetUserUseCase";
 import AdapterMongoDB from "./infra/dataBase/AdapterMongoDB";
 import UserRepositoryMongoDB from "./infra/repository/UserRepositoryMogoDB";
 import LoginUserUseCase from "./aplication/useCases/LoginUserUseCase";
-import JWTGeneretor from "./domain/entities/JWTGeneretor";
+import JWTGeneretor from "./domain/entities/JWTGenerator";
+dotenv.config();
 
 const server = new ExpressAdapter();
 const connection = new AdapterMongoDB();
