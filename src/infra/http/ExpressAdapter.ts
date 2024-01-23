@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import cors from "cors";
 import HttpServer from "./HttpServer";
 import swaggerUI from "swagger-ui-express";
 import swaggerDocs from "/home/fabiojunior/Área de Trabalho/users-service/src/swagger.json";
@@ -8,6 +9,7 @@ export default class ExpressAdapter implements HttpServer {
   constructor() {
     this.app = express();
     this.app.use(express.json());
+    this.app.use(cors());
     this.app.use(
       "/documentation",
       swaggerUI.serve,
@@ -16,10 +18,14 @@ export default class ExpressAdapter implements HttpServer {
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  register(method: string, url: string, callback: Function): void {
+  register(method: string, url: string, callback: Function): any {
     return this.app[method](url, async function (req: Request, res: Response) {
       try {
-        const { statusCode, body } = await callback(req.params, req.body);
+        const { statusCode, body } = await callback(
+          req.params,
+          req.body,
+          req.query
+        );
         res.status(statusCode).json(body);
       } catch (error) {
         if (error instanceof Error) res.status(400).json(error.message);
