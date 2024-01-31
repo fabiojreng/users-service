@@ -21,11 +21,7 @@ export default class ExpressAdapter implements HttpServer {
   register(method: string, url: string, callback: Function): any {
     return this.app[method](url, async function (req: Request, res: Response) {
       try {
-        const { statusCode, body } = await callback(
-          req.params,
-          req.body,
-          req.query
-        );
+        const { statusCode, body } = await callback(req);
         res.status(statusCode).json(body);
       } catch (error) {
         if (error instanceof Error) res.status(400).json(error.message);

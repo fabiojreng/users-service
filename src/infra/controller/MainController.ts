@@ -12,17 +12,17 @@ export default class MainController {
     private loginUser: LoginUserUseCase,
     private httpServer: HttpServer
   ) {
-    httpServer.register("post", "/user", async function (body: any) {
+    httpServer.register("post", "/user", async function (req: any) {
       try {
-        await createUser.execute(body);
+        await createUser.execute(req.body);
         return { statusCode: 201, body: { msg: "User created" } };
       } catch (error) {
         if (error instanceof Error) throw new Error(error.message);
       }
     });
-    httpServer.register("get", "/user/:id", async function (params: any) {
+    httpServer.register("get", "/user/:id", async function (req: any) {
       try {
-        const user = await getUser.execute(params.id);
+        const user = await getUser.execute(req.params.id);
         return { statusCode: 200, body: user };
       } catch (error) {
         if (error instanceof Error) throw new Error(error.message);
@@ -36,8 +36,8 @@ export default class MainController {
         if (error instanceof Error) throw new Error(error.message);
       }
     });
-    httpServer.register("post", "/login", async function (body: any) {
-      const token = await loginUser.execute(body);
+    httpServer.register("post", "/login", async function (req: any) {
+      const token = await loginUser.execute(req.body);
       return {
         statusCode: 200,
         body: {

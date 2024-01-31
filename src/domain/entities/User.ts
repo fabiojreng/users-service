@@ -14,7 +14,8 @@ export default class User {
     readonly course: string,
     readonly typeUser: TypeUser,
     readonly createdAt: Date
-  ) {}
+  ) //readonly qtdDocuments: Number
+  {}
 
   static create(
     name: string,
@@ -25,6 +26,7 @@ export default class User {
     typeUser: string
   ) {
     const id = crypto.randomUUID();
+    //const qtdDocuments = 0;
     const createdAt = new Date();
     return new User(
       id,
@@ -35,6 +37,7 @@ export default class User {
       course,
       new TypeUser(typeUser),
       createdAt
+      //qtdDocuments
     );
   }
 
@@ -47,6 +50,7 @@ export default class User {
     course: string,
     typeUser: string,
     createdAt: string
+    //qtdDocuments: number
   ) {
     return new User(
       id,
@@ -57,6 +61,7 @@ export default class User {
       course,
       new TypeUser(typeUser),
       new Date(createdAt)
+      //qtdDocuments
     );
   }
 }
