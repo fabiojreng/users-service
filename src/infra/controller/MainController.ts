@@ -1,50 +1,42 @@
-import CreateUserUseCase from "../../aplication/useCases/CreateUserUseCase";
-import GetAllUsersUseCase from "../../aplication/useCases/GetAllUserUseCase";
-import GetUserUseCase from "../../aplication/useCases/GetUserUseCase";
-import LoginUserUseCase from "../../aplication/useCases/LoginUserUseCase";
+import UseCase from "../../aplication/useCases/UseCase";
 import HttpServer from "../http/HttpServer";
 
 export default class MainController {
   constructor(
-    private createUser: CreateUserUseCase,
-    private getUser: GetUserUseCase,
-    private getAllUsers: GetAllUsersUseCase,
-    private loginUser: LoginUserUseCase,
-    private httpServer: HttpServer
+    readonly httpServer: HttpServer,
+    readonly createUser: UseCase,
+    readonly getUser: UseCase,
+    readonly getAllUsers: UseCase,
+    readonly loginUser: UseCase,
+    readonly verifyToken: UseCase
   ) {
-    httpServer.register("post", "/user", async function (req: any) {
-      try {
-        await createUser.execute(req.body);
-        return { statusCode: 201, body: { msg: "User created" } };
-      } catch (error) {
-        if (error instanceof Error) throw new Error(error.message);
-      }
-    });
-    httpServer.register("get", "/user/:id", async function (req: any) {
-      try {
-        const user = await getUser.execute(req.params.id);
-        return { statusCode: 200, body: user };
-      } catch (error) {
-        if (error instanceof Error) throw new Error(error.message);
-      }
-    });
-    httpServer.register("get", "/users", async function () {
-      try {
-        const users = await getAllUsers.execute();
-        return { statusCode: 200, body: users };
-      } catch (error) {
-        if (error instanceof Error) throw new Error(error.message);
-      }
-    });
-    httpServer.register("post", "/login", async function (req: any) {
-      const token = await loginUser.execute(req.body);
+    this.httpServer?.register("get", "/", async () => {
       return {
         statusCode: 200,
         body: {
-          msg: "User authenticated",
-          token: token,
+          message: "Bem Vindo a API de Usuários",
         },
       };
+    });
+    this.httpServer?.register("post", "/user", async (req: any) => {
+      const output = await this.createUser.execute(req.body);
+      return output;
+    });
+    this.httpServer?.register("get", "/user/:id", async (req: any) => {
+      const output = await this.getUser.execute(req.params.id);
+      return output;
+    });
+    this.httpServer?.register("get", "/users", async (req: any) => {
+      const output = await this.getAllUsers.execute(req);
+      return output;
+    });
+    this.httpServer?.register("post", "/login", async (req: any) => {
+      const output = await this.loginUser.execute(req.body);
+      return output;
+    });
+    this.httpServer?.register("post", "/check", async (req: any) => {
+      const output = await this.verifyToken.execute(req.body.token);
+      return output;
     });
   }
 }

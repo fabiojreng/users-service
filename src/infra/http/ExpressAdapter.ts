@@ -2,7 +2,8 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import HttpServer from "./HttpServer";
 import swaggerUI from "swagger-ui-express";
-import swaggerDocs from "/home/fabiojunior/Área de Trabalho/users-service/src/swagger.json";
+import swaggerDocs from "../../swagger.json";
+import HttpResponse from "../../domain/Protocols/Http";
 
 export default class ExpressAdapter implements HttpServer {
   app: any;
@@ -21,11 +22,11 @@ export default class ExpressAdapter implements HttpServer {
   register(method: string, url: string, callback: Function): any {
     return this.app[method](url, async function (req: Request, res: Response) {
       try {
-        const { statusCode, body } = await callback(req);
-        res.status(statusCode).json(body);
+        const output: HttpResponse = await callback(req);
+        res.status(output.statusCode).json(output.body);
       } catch (error) {
-        if (error instanceof Error) res.status(400).json(error.message);
-        res.status(400).json("Unexpected error");
+        // if (error instanceof Error) res.status(400).json(error.message);
+        // res.status(400).json('Unexpected error');
       }
     });
   }

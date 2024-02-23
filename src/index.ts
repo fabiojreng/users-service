@@ -7,7 +7,8 @@ import GetUserUseCase from "./aplication/useCases/GetUserUseCase";
 import AdapterMongoDB from "./infra/dataBase/AdapterMongoDB";
 import UserRepositoryMongoDB from "./infra/repository/UserRepositoryMogoDB";
 import LoginUserUseCase from "./aplication/useCases/LoginUserUseCase";
-import JWTGeneretor from "./domain/entities/JWTGenerator";
+import VerifyTokenUseCase from "./aplication/useCases/VerifyTokenUseCase";
+
 dotenv.config();
 
 const server = new ExpressAdapter();
@@ -16,7 +17,15 @@ const mongoDB = new UserRepositoryMongoDB(connection);
 const createUser = new CreateUserUseCase(mongoDB);
 const getUser = new GetUserUseCase(mongoDB);
 const getAllUsers = new GetAllUsersUseCase(mongoDB);
-const jwtGeneretor = new JWTGeneretor();
-const login = new LoginUserUseCase(mongoDB, jwtGeneretor);
-new MainController(createUser, getUser, getAllUsers, login, server);
-server.listen(3333);
+const verifyTokenUseCase = new VerifyTokenUseCase();
+
+const login = new LoginUserUseCase(mongoDB);
+new MainController(
+  server,
+  createUser,
+  getUser,
+  getAllUsers,
+  login,
+  verifyTokenUseCase
+);
+server.listen(3005);

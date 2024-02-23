@@ -1,3 +1,10 @@
+import NotFoundError from "../../domain/Errors/NotFoundError";
+import {
+  notFound,
+  serverError,
+  success,
+} from "../../domain/Helpers/HttpHelper";
+import HttpResponse from "../../domain/Protocols/Http";
 import IUserRepository from "../repository/UserRepository";
 
 export interface Output {
@@ -13,24 +20,28 @@ export interface Output {
 
 export default class GetUserUseCase {
   constructor(private getUserRepository: IUserRepository) {}
-  async execute(id: string): Promise<Output> {
+  async execute(id: string): Promise<HttpResponse> {
     try {
       const user = await this.getUserRepository.findById(id);
 
-      if (!user) throw new Error(`User not found for id ${id}`);
-      return {
-        id: user.id,
-        name: user.name.getValue(),
-        email: user.email.getValue(),
-        password: user.password.getValue(),
-        registerCode: user.registerCode,
-        course: user.course,
-        typeUser: user.typeUser.getValue(),
-        createdAt: user.createdAt,
-      };
+      if (!user) return notFound(new NotFoundError());
+      return success({
+        message: "User",
+        data: {
+          id: user.id,
+          name: user.name.getValue(),
+          email: user.email.getValue(),
+          registerCode: user.registerCode,
+          course: user.course,
+          typeUser: user.typeUser.getValue(),
+          createdAt: user.createdAt,
+        },
+      });
     } catch (error) {
-      if (error instanceof Error) throw new Error(error.message);
-      throw new Error("Unexpected error");
+      if (error instanceof Error) {
+        return serverError(error);
+      }
+      return serverError(new Error("Unexpected Error"));
     }
   }
 }

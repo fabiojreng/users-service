@@ -4,8 +4,7 @@ import IDatabaseConnection from "./Connection";
 export default class AdapterMongoDB implements IDatabaseConnection {
   private client: MongoClient;
   private db: Db;
-  private url =
-    process.env.MONGODB_URL || "mongodb+srv://cluster0.r6jwwdl.mongodb.net";
+  private url = process.env.MONGODB_URL!;
   private username = process.env.MONGODB_USER;
   private password = process.env.MONGODB_PASSWORD;
 
@@ -18,7 +17,6 @@ export default class AdapterMongoDB implements IDatabaseConnection {
 
   async connect(): Promise<void> {
     await this.client.connect();
-    console.log("conectado");
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -28,6 +26,5 @@ export default class AdapterMongoDB implements IDatabaseConnection {
 
   async close(): Promise<void> {
     await this.client.close();
-    console.log("fechando conexão");
   }
 }

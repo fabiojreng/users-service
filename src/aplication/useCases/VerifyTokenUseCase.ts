@@ -1,28 +1,35 @@
-import JWTGenerator from "../../domain/entities/JWTGenerator";
+import UnauthorizedError from "../../domain/Errors/UnauthorizedError";
+import {
+  forbidden,
+  serverError,
+  success,
+} from "../../domain/Helpers/HttpHelper";
+import HttpResponse from "../../domain/Protocols/Http";
+import TokenGenerator from "../../domain/entities/TokenGenerator";
+import UseCase from "./UseCase";
 
-export default class VerifyToken {
-  constructor(private jwtGenerate: JWTGenerator) {}
-  async execute(token: string) {
+export default class VerifyToken implements UseCase {
+  constructor() {}
+  async execute(token: string): Promise<HttpResponse> {
     try {
-      const auth = await this.jwtGenerate.verifyToken(token);
-      if (auth) {
-        return {
-          message: "Authorized",
-          data: {
-            id: auth.id,
-            name: auth.name.getValue(),
-            email: auth.email.getValue(),
-          },
-          status: true,
-        };
+      const payload = TokenGenerator.verify(token);
+      if (!payload) {
+        return forbidden(new UnauthorizedError());
       }
-      return {
-        message: "Unauthorized",
-        status: false,
-      };
+      return success({
+        message: "Authorized",
+        data: {
+          id: payload.id,
+          name: payload.name,
+          email: payload.email,
+          iat: payload.iat,
+        },
+      });
     } catch (error) {
-      if (error instanceof Error) throw new Error(error.message);
-      throw new Error("Unexpected error");
+      if (error instanceof Error) {
+        return serverError(error);
+      }
+      return serverError(new Error("Unexpected Error"));
     }
   }
 }

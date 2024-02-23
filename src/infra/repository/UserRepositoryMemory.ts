@@ -1,5 +1,5 @@
 import ICreateUserRepository from "../../aplication/repository/UserRepository";
-import User from "../../domain/entities/User";
+import User from "../../domain/domain/entities/User";
 
 export default class UserRepositoryDBMemory implements ICreateUserRepository {
   users: User[] = [];

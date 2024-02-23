@@ -1,5 +1,13 @@
+import { EmailInUseError } from "../../domain/Errors/EmailInUseError";
+import {
+  forbidden,
+  serverError,
+  success,
+} from "../../domain/Helpers/HttpHelper";
+import HttpResponse from "../../domain/Protocols/Http";
 import User from "../../domain/entities/User";
 import IUserRepository from "../repository/UserRepository";
+import UseCase from "./UseCase";
 
 export interface ICreateUserParams {
   name: string;
@@ -10,15 +18,16 @@ export interface ICreateUserParams {
   typeUser: string;
 }
 
-export default class CreateUserUseCase {
+export default class CreateUserUseCase implements UseCase {
   constructor(private createUserRepository: IUserRepository) {}
-  async execute(params: ICreateUserParams): Promise<User> {
+  async execute(params: ICreateUserParams): Promise<HttpResponse> {
     try {
-      const verifyEmail = await this.createUserRepository.findByEmail(
+      const userExits = await this.createUserRepository.findByEmail(
         params.email
       );
-      if (verifyEmail) throw new Error("Email already exists");
-      const user = User.create(
+
+      if (userExits) return forbidden(new EmailInUseError());
+      const user = await User.create(
         params.name,
         params.email,
         params.password,
@@ -27,10 +36,12 @@ export default class CreateUserUseCase {
         params.typeUser
       );
       await this.createUserRepository.save(user);
-      return user;
+      return success({ message: "User created successfully", data: null });
     } catch (error) {
-      if (error instanceof Error) throw new Error(error.message);
-      throw new Error("Unexpected error");
+      if (error instanceof Error) {
+        return serverError(error);
+      }
+      return serverError(new Error("Unexpected Error"));
     }
   }
 }

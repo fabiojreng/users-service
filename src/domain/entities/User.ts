@@ -1,23 +1,22 @@
 import crypto from "crypto";
-import Email from "../VO/Email";
 import Name from "../VO/Name";
+import Email from "../VO/Email";
 import TypeUser from "../VO/UserType";
-import Password from "../VO/Password";
+import Pass from "../VO/Pass";
 
 export default class User {
   constructor(
     readonly id: string,
     readonly name: Name,
     readonly email: Email,
-    readonly password: Password,
+    readonly password: Pass,
     readonly registerCode: string,
     readonly course: string,
     readonly typeUser: TypeUser,
     readonly createdAt: Date
-  ) //readonly qtdDocuments: Number
-  {}
+  ) {}
 
-  static create(
+  static async create(
     name: string,
     email: string,
     password: string,
@@ -32,7 +31,7 @@ export default class User {
       id,
       new Name(name),
       new Email(email),
-      new Password(password),
+      await Pass.create(password),
       registerCode,
       course,
       new TypeUser(typeUser),
@@ -56,12 +55,15 @@ export default class User {
       id,
       new Name(name),
       new Email(email),
-      new Password(password),
+      new Pass(password),
       registerCode,
       course,
       new TypeUser(typeUser),
       new Date(createdAt)
       //qtdDocuments
     );
+  }
+  async validatePass(password: string) {
+    return this.password.validate(password);
   }
 }
