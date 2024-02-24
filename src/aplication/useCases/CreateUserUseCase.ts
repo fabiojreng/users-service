@@ -1,4 +1,5 @@
 import { EmailInUseError } from "../../domain/Errors/EmailInUseError";
+import UnauthorizedError from "../../domain/Errors/UnauthorizedError";
 import {
   forbidden,
   serverError,
@@ -25,8 +26,11 @@ export default class CreateUserUseCase implements UseCase {
       const userExits = await this.createUserRepository.findByEmail(
         params.email
       );
-
       if (userExits) return forbidden(new EmailInUseError());
+      const validTypes = ["Aluno", "Professor"];
+      if (!validTypes.includes(params.typeUser)) {
+        return forbidden(new UnauthorizedError());
+      }
       const user = await User.create(
         params.name,
         params.email,

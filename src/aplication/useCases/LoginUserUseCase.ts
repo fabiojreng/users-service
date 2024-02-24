@@ -8,20 +8,21 @@ import {
 } from "../../domain/Helpers/HttpHelper";
 import CredentiasError from "../../domain/Errors/CredentiasError";
 import UseCase from "./UseCase";
+import UnauthorizedError from "../../domain/Errors/UnauthorizedError";
 
 export default class LoginUserUseCase implements UseCase {
   constructor(private userRepository: IUserRepository) {}
   async execute(params: Input): Promise<HttpResponse> {
     try {
       const user = await this.userRepository.findByEmail(params.email);
-      if (user) {
+      if (user && user.typeUser.getValue() != "Bibliotecário") {
         const verifyPass = await user.validatePass(params.password);
         if (!verifyPass) return forbidden(new CredentiasError());
         const token = TokenGenerator.generate(user);
         return success({ message: "User Logged", data: token });
       }
 
-      return forbidden(new CredentiasError());
+      return forbidden(new UnauthorizedError());
     } catch (error) {
       if (error instanceof Error) {
         return serverError(error);
