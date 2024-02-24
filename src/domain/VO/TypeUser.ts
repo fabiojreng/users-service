@@ -2,7 +2,7 @@ export default class TypeUser {
   private value: string;
 
   constructor(type: string) {
-    const validTypes = ["Aluno", "Servidor", "Bibliotecário"];
+    const validTypes = ["Aluno", "Professor", "Bibliotecário"];
     if (validTypes.includes(type)) {
       this.value = type;
     } else {
