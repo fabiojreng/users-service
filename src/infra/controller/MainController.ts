@@ -8,6 +8,7 @@ export default class MainController {
     readonly getUser: UseCase,
     readonly getAllUsers: UseCase,
     readonly loginUser: UseCase,
+    readonly loginAdm: UseCase,
     readonly verifyToken: UseCase
   ) {
     this.httpServer?.register("get", "/", async () => {
@@ -32,6 +33,10 @@ export default class MainController {
     });
     this.httpServer?.register("post", "/login", async (req: any) => {
       const output = await this.loginUser.execute(req.body);
+      return output;
+    });
+    this.httpServer?.register("post", "/adm", async (req: any) => {
+      const output = await this.loginAdm.execute(req.body);
       return output;
     });
     this.httpServer?.register("post", "/check", async (req: any) => {
