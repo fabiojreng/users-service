@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import Name from "../VO/Name";
 import Email from "../VO/Email";
-import TypeUser from "../VO/UserType";
+import TypeUser from "../VO/TypeUser";
 import Pass from "../VO/Pass";
 
 export default class User {
@@ -24,8 +24,8 @@ export default class User {
     course: string,
     typeUser: string
   ) {
-    const id = crypto.randomUUID();
     //const qtdDocuments = 0;
+    const id = crypto.randomUUID();
     const createdAt = new Date();
     return new User(
       id,

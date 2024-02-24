@@ -8,6 +8,7 @@ import AdapterMongoDB from "./infra/dataBase/AdapterMongoDB";
 import UserRepositoryMongoDB from "./infra/repository/UserRepositoryMogoDB";
 import LoginUserUseCase from "./aplication/useCases/LoginUserUseCase";
 import VerifyTokenUseCase from "./aplication/useCases/VerifyTokenUseCase";
+import LoginAdmUseCase from "./aplication/useCases/LoginAdmUseCase";
 
 dotenv.config();
 
@@ -18,14 +19,16 @@ const createUser = new CreateUserUseCase(mongoDB);
 const getUser = new GetUserUseCase(mongoDB);
 const getAllUsers = new GetAllUsersUseCase(mongoDB);
 const verifyTokenUseCase = new VerifyTokenUseCase();
+const loginUser = new LoginUserUseCase(mongoDB);
+const loginAdm = new LoginAdmUseCase(mongoDB);
 
-const login = new LoginUserUseCase(mongoDB);
 new MainController(
   server,
   createUser,
   getUser,
   getAllUsers,
-  login,
+  loginUser,
+  loginAdm,
   verifyTokenUseCase
 );
 server.listen(3005);

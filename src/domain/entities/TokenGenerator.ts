@@ -1,6 +1,6 @@
-import { sign, verify } from 'jsonwebtoken';
+import { sign, verify } from "jsonwebtoken";
 
-import User from './User';
+import User from "./User";
 
 export default class TokenGenerator {
   static generate(payload: User) {
@@ -9,10 +9,10 @@ export default class TokenGenerator {
         id: payload.id,
         name: payload.name.getValue(),
         email: payload.email.getValue(),
-        iat: new Date().getTime(),
-        expiresIn: '3d',
+        //iat: new Date().getTime(),
       },
       process.env.SECRET_KEY!,
+      { expiresIn: "1d" }
     );
     return token;
   }
