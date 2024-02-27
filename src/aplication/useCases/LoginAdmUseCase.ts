@@ -19,9 +19,19 @@ export default class LoginAdmUseCase implements UseCase {
         const verifyPass = await user.validatePass(params.password);
         if (!verifyPass) return forbidden(new CredentiasError());
         const token = TokenGenerator.generate(user);
-        return success({ message: "User Logged", data: token });
+        return success({
+          message: "User Logged",
+          data: {
+            id: user.id,
+            user: user.name.getValue(),
+            email: user.email.getValue(),
+            registerCode: user.registerCode,
+            course: user.course,
+            typeUser: user.typeUser.getValue(),
+            token: token,
+          },
+        });
       }
-
       return forbidden(new UnauthorizedError());
     } catch (error) {
       if (error instanceof Error) {

@@ -40,7 +40,17 @@ export default class CreateUserUseCase implements UseCase {
         params.typeUser
       );
       await this.createUserRepository.save(user);
-      return success({ message: "User created successfully", data: null });
+      return success({
+        message: "User created successfully",
+        data: {
+          id: user.id,
+          user: user.name.getValue(),
+          email: user.email.getValue(),
+          registerCode: user.registerCode,
+          course: user.course,
+          typeUser: user.typeUser.getValue(),
+        },
+      });
     } catch (error) {
       if (error instanceof Error) {
         return serverError(error);
