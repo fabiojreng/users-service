@@ -70,4 +70,14 @@ export default class UserRepositoryMongoDB implements IUserRepository {
       id: _id.toHexString(),
     }));
   }
+
+  async updatePassword(id: string, newPassword: string): Promise<void> {
+    await this.mongo.connect();
+    const query = await this.mongo.query();
+    const idMongo = new ObjectId(id);
+    await query
+      .collection("users")
+      .updateOne({ _id: idMongo }, { $set: { password: newPassword } });
+    await this.mongo.close();
+  }
 }
