@@ -9,6 +9,7 @@ import UserRepositoryMongoDB from "./infra/repository/UserRepositoryMogoDB";
 import LoginUserUseCase from "./aplication/useCases/LoginUserUseCase";
 import VerifyTokenUseCase from "./aplication/useCases/VerifyTokenUseCase";
 import LoginAdmUseCase from "./aplication/useCases/LoginAdmUseCase";
+import ResetPassword from "./aplication/useCases/ResetPasswordUseCase";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ const getAllUsers = new GetAllUsersUseCase(mongoDB);
 const verifyTokenUseCase = new VerifyTokenUseCase();
 const loginUser = new LoginUserUseCase(mongoDB);
 const loginAdm = new LoginAdmUseCase(mongoDB);
+const resetPassord = new ResetPassword(mongoDB);
 
 new MainController(
   server,
@@ -29,6 +31,7 @@ new MainController(
   getAllUsers,
   loginUser,
   loginAdm,
+  resetPassord,
   verifyTokenUseCase
 );
 server.listen(3005);
