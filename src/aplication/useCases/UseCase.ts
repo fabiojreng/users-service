@@ -1,4 +1,4 @@
-import HttpResponse from "../../domain/Protocols/Http";
+import HttpResponse from "../../domain/Protocols/HttpResponse";
 export default interface UseCase {
   execute(input: any): Promise<HttpResponse>;
 }

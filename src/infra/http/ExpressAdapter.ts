@@ -3,7 +3,7 @@ import cors from "cors";
 import HttpServer from "./HttpServer";
 import swaggerUI from "swagger-ui-express";
 import swaggerDocs from "../../swagger.json";
-import HttpResponse from "../../domain/Protocols/Http";
+import HttpResponse from "../../domain/Protocols/HttpResponse";
 
 export default class ExpressAdapter implements HttpServer {
   app: any;

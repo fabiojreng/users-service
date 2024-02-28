@@ -1,6 +1,6 @@
 import IUserRepository from "../repository/UserRepository";
 import TokenGenerator from "../../domain/entities/TokenGenerator";
-import HttpResponse from "../../domain/Protocols/Http";
+import HttpResponse from "../../domain/Protocols/HttpResponse";
 import {
   forbidden,
   serverError,

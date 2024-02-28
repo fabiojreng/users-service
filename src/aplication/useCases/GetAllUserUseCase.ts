@@ -3,7 +3,7 @@ import {
   serverError,
   success,
 } from "../../domain/Helpers/HttpHelper";
-import HttpResponse from "../../domain/Protocols/Http";
+import HttpResponse from "../../domain/Protocols/HttpResponse";
 import IUserRepository from "../repository/UserRepository";
 import UseCase from "./UseCase";
 

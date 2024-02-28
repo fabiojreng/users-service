@@ -1,4 +1,4 @@
-import HttpResponse from "../Protocols/Http";
+import HttpResponse from "../Protocols/HttpResponse";
 
 export const badRequest = (error: Error): HttpResponse => ({
   statusCode: 400,
