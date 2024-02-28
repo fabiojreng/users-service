@@ -13,7 +13,6 @@ export interface Output {
   email: string;
   password: string;
   registerCode: string;
-  course: string;
   typeUser: string;
   createdAt: Date;
 }
@@ -32,7 +31,6 @@ export default class GetUserUseCase {
           name: user.name.getValue(),
           email: user.email.getValue(),
           registerCode: user.registerCode,
-          course: user.course,
           typeUser: user.typeUser.getValue(),
           createdAt: user.createdAt,
         },

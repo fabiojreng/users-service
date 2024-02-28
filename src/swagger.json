@@ -35,7 +35,6 @@
                     "email": "teste@gmail",
                     "password": "12345678",
                     "registerCode": "teste code",
-                    "course": "teste course",
                     "typeUser": "Aluno"
                   }
                 }
@@ -139,9 +138,6 @@
           "registerCode": {
             "type": "string"
           },
-          "course": {
-            "type": "string"
-          },
           "typeUser": {
             "type": "string"
           },
@@ -168,9 +164,6 @@
             "type": "string"
           },
           "registerCode": {
-            "type": "string"
-          },
-          "course": {
             "type": "string"
           },
           "typeUser": {

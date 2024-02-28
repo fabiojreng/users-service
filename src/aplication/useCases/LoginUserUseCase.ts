@@ -26,7 +26,6 @@ export default class LoginUserUseCase implements UseCase {
             user: user.name.getValue(),
             email: user.email.getValue(),
             registerCode: user.registerCode,
-            course: user.course,
             typeUser: user.typeUser.getValue(),
             token: token,
           },

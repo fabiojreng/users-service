@@ -14,7 +14,6 @@ export default class UserRepositoryMongoDB implements IUserRepository {
       email: user.email.getValue(),
       password: user.password.getValue(),
       registerCode: user.registerCode,
-      course: user.course,
       typeUser: user.typeUser.getValue(),
       createdAt: user.createdAt,
     });
@@ -32,7 +31,6 @@ export default class UserRepositoryMongoDB implements IUserRepository {
         userDB.email,
         userDB.password,
         userDB.registerCode,
-        userDB.course,
         userDB.typeUser,
         userDB.createdAt
       );
@@ -54,7 +52,6 @@ export default class UserRepositoryMongoDB implements IUserRepository {
         userDB.email,
         userDB.password,
         userDB.registerCode,
-        userDB.course,
         userDB.typeUser,
         userDB.createdAt
       );

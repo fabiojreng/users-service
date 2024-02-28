@@ -15,7 +15,6 @@ export interface ICreateUserParams {
   email: string;
   password: string;
   registerCode: string;
-  course: string;
   typeUser: string;
 }
 
@@ -36,7 +35,6 @@ export default class CreateUserUseCase implements UseCase {
         params.email,
         params.password,
         params.registerCode,
-        params.course,
         params.typeUser
       );
       await this.createUserRepository.save(user);
@@ -47,7 +45,6 @@ export default class CreateUserUseCase implements UseCase {
           user: user.name.getValue(),
           email: user.email.getValue(),
           registerCode: user.registerCode,
-          course: user.course,
           typeUser: user.typeUser.getValue(),
         },
       });

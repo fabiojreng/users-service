@@ -11,7 +11,6 @@ export default class User {
     readonly email: Email,
     readonly password: Pass,
     readonly registerCode: string,
-    readonly course: string,
     readonly typeUser: TypeUser,
     readonly createdAt: Date
   ) {}
@@ -21,7 +20,6 @@ export default class User {
     email: string,
     password: string,
     registerCode: string,
-    course: string,
     typeUser: string
   ) {
     //const qtdDocuments = 0;
@@ -33,7 +31,6 @@ export default class User {
       new Email(email),
       await Pass.create(password),
       registerCode,
-      course,
       new TypeUser(typeUser),
       createdAt
       //qtdDocuments
@@ -46,7 +43,6 @@ export default class User {
     email: string,
     password: string,
     registerCode: string,
-    course: string,
     typeUser: string,
     createdAt: string
     //qtdDocuments: number
@@ -57,7 +53,6 @@ export default class User {
       new Email(email),
       new Pass(password),
       registerCode,
-      course,
       new TypeUser(typeUser),
       new Date(createdAt)
       //qtdDocuments
