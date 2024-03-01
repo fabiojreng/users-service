@@ -26,9 +26,7 @@ export default class VerifyToken implements UseCase {
         },
       });
     } catch (error) {
-      if (error instanceof Error) {
-        return serverError(error);
-      }
+      if (error instanceof Error) return serverError(error);
       return serverError(new Error("Unexpected Error"));
     }
   }

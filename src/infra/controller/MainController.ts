@@ -36,7 +36,7 @@ export default class MainController {
       const output = await this.loginUser.execute(req.body);
       return output;
     });
-    this.httpServer?.register("post", "/adm", async (req: any) => {
+    this.httpServer?.register("post", "/login/adm", async (req: any) => {
       const output = await this.loginAdm.execute(req.body);
       return output;
     });

@@ -22,7 +22,6 @@ export default class User {
     registerCode: string,
     typeUser: string
   ) {
-    //const qtdDocuments = 0;
     const id = crypto.randomUUID();
     const createdAt = new Date();
     return new User(
@@ -33,7 +32,6 @@ export default class User {
       registerCode,
       new TypeUser(typeUser),
       createdAt
-      //qtdDocuments
     );
   }
 
@@ -45,7 +43,6 @@ export default class User {
     registerCode: string,
     typeUser: string,
     createdAt: string
-    //qtdDocuments: number
   ) {
     return new User(
       id,
@@ -55,7 +52,6 @@ export default class User {
       registerCode,
       new TypeUser(typeUser),
       new Date(createdAt)
-      //qtdDocuments
     );
   }
   async validatePass(password: string) {

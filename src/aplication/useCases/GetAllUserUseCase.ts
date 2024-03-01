@@ -12,13 +12,10 @@ export default class GetAllUsersUseCase implements UseCase {
   async execute(): Promise<HttpResponse> {
     try {
       const users = await this.getAllUsersRepository.findAll();
-
       if (!users) return noContent();
       return success({ message: "Users", data: users });
     } catch (error) {
-      if (error instanceof Error) {
-        return serverError(error);
-      }
+      if (error instanceof Error) return serverError(error);
       return serverError(new Error("Unexpected Error"));
     }
   }

@@ -33,9 +33,7 @@ export default class LoginUserUseCase implements UseCase {
       }
       return forbidden(new UnauthorizedError());
     } catch (error) {
-      if (error instanceof Error) {
-        return serverError(error);
-      }
+      if (error instanceof Error) return serverError(error);
       return serverError(new Error("Unexpected Error"));
     }
   }

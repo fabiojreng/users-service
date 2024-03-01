@@ -22,7 +22,6 @@ export default class GetUserUseCase {
   async execute(id: string): Promise<HttpResponse> {
     try {
       const user = await this.getUserRepository.findById(id);
-
       if (!user) return notFound(new NotFoundError());
       return success({
         message: "User",
@@ -36,9 +35,7 @@ export default class GetUserUseCase {
         },
       });
     } catch (error) {
-      if (error instanceof Error) {
-        return serverError(error);
-      }
+      if (error instanceof Error) return serverError(error);
       return serverError(new Error("Unexpected Error"));
     }
   }

@@ -1,5 +1,5 @@
 import { EmailInUseError } from "../../domain/Errors/EmailInUseError";
-import UnauthorizedError from "../../domain/Errors/UnauthorizedError";
+import InvalidParamError from "../../domain/Errors/InvalidParamError";
 import {
   forbidden,
   serverError,
@@ -28,7 +28,7 @@ export default class CreateUserUseCase implements UseCase {
       if (userExits) return forbidden(new EmailInUseError());
       const validTypes = ["Aluno", "Professor"];
       if (!validTypes.includes(params.typeUser)) {
-        return forbidden(new UnauthorizedError());
+        return forbidden(new InvalidParamError(params.typeUser));
       }
       const user = await User.create(
         params.name,
@@ -49,9 +49,7 @@ export default class CreateUserUseCase implements UseCase {
         },
       });
     } catch (error) {
-      if (error instanceof Error) {
-        return serverError(error);
-      }
+      if (error instanceof Error) return serverError(error);
       return serverError(new Error("Unexpected Error"));
     }
   }

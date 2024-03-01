@@ -19,7 +19,6 @@ export default class AdapterMongoDB implements IDatabaseConnection {
     await this.client.connect();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async query(statement?: string, params?: any): Promise<Db> {
     return this.db;
   }
