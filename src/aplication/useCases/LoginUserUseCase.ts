@@ -23,7 +23,7 @@ export default class LoginUserUseCase implements UseCase {
           message: "User Logged",
           data: {
             id: user.id,
-            user: user.name.getValue(),
+            userName: user.name.getValue(),
             email: user.email.getValue(),
             registerCode: user.registerCode,
             typeUser: user.typeUser.getValue(),

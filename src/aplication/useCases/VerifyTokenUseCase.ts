@@ -22,6 +22,8 @@ export default class VerifyToken implements UseCase {
           id: payload.id,
           name: payload.name,
           email: payload.email,
+          registerCode: payload.registerCode,
+          typeUser: payload.typeUser,
           iat: payload.iat,
         },
       });
