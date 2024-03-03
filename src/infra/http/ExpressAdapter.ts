@@ -18,7 +18,6 @@ export default class ExpressAdapter implements HttpServer {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
   register(method: string, url: string, callback: Function): any {
     return this.app[method](url, async function (req: Request, res: Response) {
       try {

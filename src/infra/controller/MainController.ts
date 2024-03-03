@@ -44,7 +44,7 @@ export default class MainController {
       const output = await this.verifyToken.execute(req.body.token);
       return output;
     });
-    this.httpServer?.register("post", "/resetPassword", async (req: any) => {
+    this.httpServer?.register("post", "/reset-password", async (req: any) => {
       const output = await this.resetPassword.execute(req.body);
       return output;
     });
