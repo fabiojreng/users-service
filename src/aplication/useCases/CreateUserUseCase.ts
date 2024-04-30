@@ -37,11 +37,11 @@ export default class CreateUserUseCase implements UseCase {
         params.registerCode,
         params.typeUser
       );
-      await this.createUserRepository.save(user);
+      const _id = await this.createUserRepository.save(user);
       return success({
         message: "User created successfully",
         data: {
-          id: user.id,
+          id: _id,
           user: user.name.getValue(),
           email: user.email.getValue(),
           registerCode: user.registerCode,
