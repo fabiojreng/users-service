@@ -4,7 +4,7 @@ import {
   success,
 } from "../../domain/Helpers/HttpHelper";
 import HttpResponse from "../../domain/Protocols/HttpResponse";
-import IUserRepository from "../repository/UserRepository";
+import IUserRepository from "../../domain/repository/UserRepository";
 import UseCase from "./UseCase";
 
 export default class GetAllUsersUseCase implements UseCase {

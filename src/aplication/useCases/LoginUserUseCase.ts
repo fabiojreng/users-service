@@ -1,4 +1,4 @@
-import IUserRepository from "../repository/UserRepository";
+import IUserRepository from "../../domain/repository/UserRepository";
 import TokenGenerator from "../../domain/entities/TokenGenerator";
 import HttpResponse from "../../domain/Protocols/HttpResponse";
 import {

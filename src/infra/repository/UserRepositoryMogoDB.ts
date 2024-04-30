@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import IUserRepository from "../../aplication/repository/UserRepository";
+import IUserRepository from "../../domain/repository/UserRepository";
 import User from "../../domain/entities/User";
 import AdapterMongoDB from "../dataBase/AdapterMongoDB";
 

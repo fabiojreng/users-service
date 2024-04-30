@@ -7,7 +7,7 @@ import {
 } from "../../domain/Helpers/HttpHelper";
 import HttpResponse from "../../domain/Protocols/HttpResponse";
 import TokenGenerator from "../../domain/entities/TokenGenerator";
-import IUserRepository from "../repository/UserRepository";
+import IUserRepository from "../../domain/repository/UserRepository";
 import UseCase from "./UseCase";
 
 export default class LoginAdmUseCase implements UseCase {

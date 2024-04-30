@@ -7,7 +7,7 @@ import {
 } from "../../domain/Helpers/HttpHelper";
 import HttpResponse from "../../domain/Protocols/HttpResponse";
 import User from "../../domain/entities/User";
-import IUserRepository from "../repository/UserRepository";
+import IUserRepository from "../../domain/repository/UserRepository";
 import UseCase from "./UseCase";
 
 export interface ICreateUserParams {

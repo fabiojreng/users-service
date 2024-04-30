@@ -5,7 +5,7 @@ import {
   success,
 } from "../../domain/Helpers/HttpHelper";
 import HttpResponse from "../../domain/Protocols/HttpResponse";
-import IUserRepository from "../repository/UserRepository";
+import IUserRepository from "../../domain/repository/UserRepository";
 
 export interface Output {
   id: string;
