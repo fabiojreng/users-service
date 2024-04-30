@@ -6,10 +6,10 @@ import AdapterMongoDB from "../dataBase/AdapterMongoDB";
 export default class UserRepositoryMongoDB implements IUserRepository {
   constructor(private mongo: AdapterMongoDB) {}
 
-  async save(user: User): Promise<void> {
+  async save(user: User): Promise<string> {
     await this.mongo.connect();
     const query = await this.mongo.query();
-    await query.collection("users").insertOne({
+    const userDB = await query.collection("users").insertOne({
       name: user.name.getValue(),
       email: user.email.getValue(),
       password: user.password.getValue(),
@@ -18,6 +18,7 @@ export default class UserRepositoryMongoDB implements IUserRepository {
       createdAt: user.createdAt,
     });
     await this.mongo.close();
+    return userDB.insertedId.toString();
   }
 
   async findByEmail(email: string): Promise<void | User> {
